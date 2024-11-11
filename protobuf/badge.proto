@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package badge;
+
+option go_package = "badge-service/proto";
+
+service BadgeService {
+    rpc GetBadge(GetBadgeRequest) returns (Badge){}
+    rpc CreateBadge(CreateBadgeRequest) returns (Badge){}
+    rpc UpdateBadge(UpdateBadgeRequest) returns (Badge){}
+    rpc DeleteBadge(DeleteBadgeRequest) returns (DeleteBadgeResponse){}
+    rpc GetShopBadge(GetShopBadgeRequest) returns (ShopBadge){}
+    rpc InvokeNsq(GetShopBadgeRequest) returns (InvokeNsqResponse){}
+}
+
+message Badge {
+    int64 id = 1;
+    string name = 2;
+}
+
+message GetBadgeRequest {
+    int64 id = 1;
+}
+
+message CreateBadgeRequest {
+    string name = 1;
+}
+
+message UpdateBadgeRequest {
+    int64 id = 1;
+    string name = 2;
+}
+
+message DeleteBadgeRequest {
+    int64 id = 1;
+}
+
+message DeleteBadgeResponse {
+    bool deleted = 1;
+}
+
+message GetShopBadgeRequest {
+    int64 shopID = 1;
+}
+
+message InvokeNsqResponse {
+    ShopBadge shopBadge = 1;
+    string message = 2;
+}
+
+message ShopBadge {
+    int64 id = 1;
+    string name = 2;
+    int32 badgeID = 3;
+    Badge badge = 4;
+}
